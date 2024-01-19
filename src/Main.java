@@ -58,7 +58,17 @@ public class Main extends JPanel implements KeyListener {
             snakeY += CELL_SIZE;
         }
         Node newHead = new Node(snakeX, snakeY);
-        snake.getSnakeBody().removeLast();
+
+        // Eating Logic
+        // Check if the snake eats the fruit
+        if (snake.getSnakeBody().getFirst().x == fruit.getX() && snake.getSnakeBody().getFirst().y == fruit.getY()) {
+            // Draw a new fruit
+            fruit.setNewLocation(snake);
+            fruit.drawFruit(g);
+
+        } else {
+            snake.getSnakeBody().removeLast();
+        }
         snake.getSnakeBody().addFirst(newHead);
 
         allowKeyPress = true;
