@@ -19,6 +19,7 @@ public class Main extends JPanel implements KeyListener {
     private Timer t;
     private int speed = 100;
     private static String direction;
+    private boolean allowKeyPress;
 
     public Main() {
         snake = new Snake();
@@ -32,6 +33,7 @@ public class Main extends JPanel implements KeyListener {
         },0,speed);
         direction = "Right";
         addKeyListener(this);
+        allowKeyPress = true;
     }
 
     @Override
@@ -59,6 +61,7 @@ public class Main extends JPanel implements KeyListener {
         snake.getSnakeBody().removeLast();
         snake.getSnakeBody().addFirst(newHead);
 
+        allowKeyPress = true;
         requestFocusInWindow();
     }
 
@@ -84,14 +87,17 @@ public class Main extends JPanel implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == 37 && !direction.equals("Right")) {
-            direction = "Left";
-        } else if (e.getKeyCode() == 38 && !direction.equals("Down")) {
-            direction = "Up";
-        } else if (e.getKeyCode() == 39 && !direction.equals("Left")) {
-            direction = "Right";
-        } else if (e.getKeyCode() == 40 && !direction.equals("Up")) {
-            direction = "Down";
+        if (allowKeyPress) {
+            if (e.getKeyCode() == 37 && !direction.equals("Right")) {
+                direction = "Left";
+            } else if (e.getKeyCode() == 38 && !direction.equals("Down")) {
+                direction = "Up";
+            } else if (e.getKeyCode() == 39 && !direction.equals("Left")) {
+                direction = "Right";
+            } else if (e.getKeyCode() == 40 && !direction.equals("Up")) {
+                direction = "Down";
+            }
+            allowKeyPress = false;
         }
     }
 
